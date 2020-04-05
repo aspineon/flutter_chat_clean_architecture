@@ -1,4 +1,4 @@
-import 'package:chatr/features/chat/data/models/chat_entity.dart';
+import 'package:chatr/features/chat/data/models/message_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseChatRepository {
@@ -7,10 +7,10 @@ class FirebaseChatRepository {
 
   FirebaseChatRepository(this._firestore);
 
-  Stream<List<ChatEntity>> messages() {
+  Stream<List<MessageEntity>> messages() {
     return _firestore.collection(path).snapshots().map((snapshot) {
       return snapshot.documents.map((doc) {
-        return ChatEntity(
+        return MessageEntity(
           timestamp: doc['timestamp'],
           author: doc['author'],
           text: doc['text'],
@@ -19,7 +19,7 @@ class FirebaseChatRepository {
     });
   }
 
-  void sendMessage(ChatEntity message) {}
+  void sendMessage(MessageEntity message) {}
 
   deleteMessage(List<String> list) {}
 }

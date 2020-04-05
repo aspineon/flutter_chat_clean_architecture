@@ -3,25 +3,28 @@ import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shortid/shortid.dart';
 
-part 'chat_entity.g.dart';
+part 'message_entity.g.dart';
 
 @JsonSerializable()
-class ChatEntity extends Equatable {
-  final String id = shortid.generate();
+class MessageEntity extends Equatable {
+  final String id;
   final String text;
   final String author;
   final int timestamp;
 
-  ChatEntity({
+  MessageEntity({
+    @required this.id,
     @required this.text,
     @required this.author,
     @required this.timestamp,
   });
 
+  static String generateId() => shortid.generate();
+
   @override
   List<Object> get props => [id, text, author, timestamp];
 
-  factory ChatEntity.fromJson(Map<String, dynamic> json) =>
-      _$ChatEntityFromJson(json);
-  Map<String, dynamic> toJson() => _$ChatEntityToJson(this);
+  factory MessageEntity.fromJson(Map<String, dynamic> json) =>
+      _$MessageEntityFromJson(json);
+  Map<String, dynamic> toJson() => _$MessageEntityToJson(this);
 }

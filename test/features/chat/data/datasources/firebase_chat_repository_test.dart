@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:chatr/features/chat/data/datasources/firebase_chat_repository.dart';
-import 'package:chatr/features/chat/data/models/chat_entity.dart';
+import 'package:chatr/features/chat/data/models/message_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 void main() {
-  ChatEntity message;
+  MessageEntity message;
   setUp(() {
-    message = ChatEntity(author: "Me", text: "example", timestamp: 1122);
+    message = MessageEntity(
+        id: "Mzc4e3tmg", author: "Me", text: "example", timestamp: 1122);
   });
 
   group('FirebaseReactiveTodosRepository', () {
@@ -22,7 +23,7 @@ void main() {
       when(firestore.collection(FirebaseChatRepository.path))
           .thenReturn(collection);
 
-      when(collection.document(message.text)).thenReturn(document);
+      when(collection.document(message.id)).thenReturn(document);
 
       repository.sendMessage(message);
 
@@ -41,7 +42,7 @@ void main() {
           .thenReturn(collection);
       when(collection.snapshots()).thenAnswer((_) => snapshots);
       when(snapshot.documents).thenReturn([document]);
-      when(document.documentID).thenReturn(message.text);
+      when(document.documentID).thenReturn(message.id);
 
       expect(repository.messages(), emits([message]));
     });
@@ -62,7 +63,7 @@ void main() {
       when(documentA.delete()).thenAnswer((_) => Future.value());
       when(documentB.delete()).thenAnswer((_) => Future.value());
 
-      await repository.deleteTodo([todoA, todoB]);
+      await repository.deleteMessage([todoA, todoB]);
 
       verify(documentA.delete());
       verify(documentB.delete());
