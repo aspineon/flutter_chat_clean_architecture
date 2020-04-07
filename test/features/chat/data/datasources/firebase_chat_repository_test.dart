@@ -48,8 +48,8 @@ void main() {
     });
 
     test('should delete todos on firestore', () async {
-      final todoA = 'A';
-      final todoB = 'B';
+      final messageA = 'A';
+      final messageB = 'B';
       final firestore = MockFirestore();
       final collection = MockCollectionReference();
       final documentA = MockDocumentReference();
@@ -58,12 +58,12 @@ void main() {
 
       when(firestore.collection(FirebaseChatRepository.path))
           .thenReturn(collection);
-      when(collection.document(todoA)).thenReturn(documentA);
-      when(collection.document(todoB)).thenReturn(documentB);
+      when(collection.document(messageA)).thenReturn(documentA);
+      when(collection.document(messageB)).thenReturn(documentB);
       when(documentA.delete()).thenAnswer((_) => Future.value());
       when(documentB.delete()).thenAnswer((_) => Future.value());
 
-      await repository.deleteMessage([todoA, todoB]);
+      await repository.deleteMessage([messageA, messageB]);
 
       verify(documentA.delete());
       verify(documentB.delete());

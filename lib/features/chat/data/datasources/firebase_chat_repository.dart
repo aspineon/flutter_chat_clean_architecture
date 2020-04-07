@@ -11,6 +11,7 @@ class FirebaseChatRepository {
     return _firestore.collection(path).snapshots().map((snapshot) {
       return snapshot.documents.map((doc) {
         return MessageEntity(
+          id: doc['id'],
           timestamp: doc['timestamp'],
           author: doc['author'],
           text: doc['text'],
@@ -19,7 +20,16 @@ class FirebaseChatRepository {
     });
   }
 
-  void sendMessage(MessageEntity message) {}
+  void sendMessage(MessageEntity message) async {
+    return _firestore
+        .collection(path)
+        .document(message.id)
+        .setData(message.toJson());
+  }
 
-  deleteMessage(List<String> list) {}
+  deleteMessage(List<String> list) async {
+    await Future.wait<void>(list.map((id) {
+      return _firestore.collection(path).document(id).delete();
+    }));
+  }
 }
