@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'message_entity.dart';
+part of 'message_entity_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) {
-  return MessageEntity(
+MessageEntityModel _$MessageEntityModelFromJson(Map<String, dynamic> json) {
+  return MessageEntityModel(
     id: json['id'] as String,
     text: json['text'] as String,
     author: json['author'] as String,
@@ -15,7 +15,7 @@ MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$MessageEntityToJson(MessageEntity instance) =>
+Map<String, dynamic> _$MessageEntityModelToJson(MessageEntityModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'text': instance.text,

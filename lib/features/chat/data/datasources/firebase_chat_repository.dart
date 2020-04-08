@@ -1,5 +1,9 @@
-import 'package:chatr/features/chat/data/models/message_entity.dart';
+import 'dart:async';
+
+import 'package:chatr/features/chat/data/models/message_entity_model.dart';
+import 'package:chatr/features/chat/domain/entities/message_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 
 class FirebaseChatRepository {
   static final path = "global_messages";
@@ -10,26 +14,24 @@ class FirebaseChatRepository {
   Stream<List<MessageEntity>> messages() {
     return _firestore.collection(path).snapshots().map((snapshot) {
       return snapshot.documents.map((doc) {
-        return MessageEntity(
+        return MessageEntityModel(
           id: doc['id'],
           timestamp: doc['timestamp'],
           author: doc['author'],
           text: doc['text'],
-        );
+        ); 
       }).toList();
     });
   }
 
-  void sendMessage(MessageEntity message) async {
+  sendMessage(MessageEntityModel message) async {
     return _firestore
         .collection(path)
         .document(message.id)
         .setData(message.toJson());
   }
 
-  deleteMessage(List<String> list) async {
-    await Future.wait<void>(list.map((id) {
-      return _firestore.collection(path).document(id).delete();
-    }));
+  deleteMessage(String id) async {
+    return _firestore.collection(path).document(id).delete();
   }
 }

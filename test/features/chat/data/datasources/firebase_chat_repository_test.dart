@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:chatr/features/chat/data/datasources/firebase_chat_repository.dart';
-import 'package:chatr/features/chat/data/models/message_entity.dart';
+import 'package:chatr/features/chat/data/models/message_entity_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 void main() {
-  MessageEntity message;
+  MessageEntityModel message;
   setUp(() {
-    message = MessageEntity(
+    message = MessageEntityModel(
         id: "Mzc4e3tmg", author: "Me", text: "example", timestamp: 1122);
   });
 
@@ -63,9 +63,9 @@ void main() {
       when(documentA.delete()).thenAnswer((_) => Future.value());
       when(documentB.delete()).thenAnswer((_) => Future.value());
 
-      await repository.deleteMessage([messageA, messageB]);
-
+      await repository.deleteMessage(messageA);
       verify(documentA.delete());
+      await repository.deleteMessage(messageB);
       verify(documentB.delete());
     });
   });

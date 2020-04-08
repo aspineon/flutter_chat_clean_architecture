@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chatr/features/chat/data/models/message_entity.dart';
+import 'package:chatr/features/chat/data/models/message_entity_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
@@ -8,27 +8,27 @@ import '../../../../fixtures/fixture_reader.dart';
 void main() {
   group('ChatEntity test', () {
     test('not equal', () async {
-      final one = MessageEntity(
+      final one = MessageEntityModel(
           id: "Mzc4e3tmg", author: "Me", text: "example", timestamp: 1122);
-      final two = MessageEntity(
+      final two = MessageEntityModel(
           id: "diffrent", author: "Me", text: "example", timestamp: 1122);
 
       expect(one == two, equals(false));
     });
 
     test('equal', () async {
-      final one = MessageEntity(
+      final one = MessageEntityModel(
           id: "Mzc4e3tmg", author: "Me", text: "example", timestamp: 1122);
-      final two = MessageEntity(
+      final two = MessageEntityModel(
           id: "Mzc4e3tmg", author: "Me", text: "example", timestamp: 1122);
 
       expect(one == two, equals(true));
     });
   });
 
-  MessageEntity messageEntity;
+  MessageEntityModel messageEntity;
   setUp(() {
-    messageEntity = MessageEntity(
+    messageEntity = MessageEntityModel(
       id: "Mzc4e3tmg",
       author: "Me",
       text: "example",
@@ -43,7 +43,7 @@ void main() {
         final Map<String, dynamic> jsonMap =
             json.decode(fixture('message.json'));
 
-        final result = MessageEntity.fromJson(jsonMap);
+        final result = MessageEntityModel.fromJson(jsonMap);
 
         expect(result, messageEntity);
       },
