@@ -13,7 +13,7 @@ void main() {
         id: "Mzc4e3tmg", author: "Me", text: "example", timestamp: 1122);
   });
 
-  group('FirebaseReactiveTodosRepository', () {
+  group('Firebase chat repository', () {
     test('should send chat message to firestore', () {
       final firestore = MockFirestore();
       final collection = MockCollectionReference();
@@ -47,7 +47,7 @@ void main() {
       expect(repository.messages(), emits([message]));
     });
 
-    test('should delete todos on firestore', () async {
+    test('should delete message on firestore', () async {
       final messageA = 'A';
       final messageB = 'B';
       final firestore = MockFirestore();
